@@ -20,33 +20,47 @@ architecture RTL of testbench is
 
 begin
 
-     shifter_inst : entity work.sseg_d
+     sseg_inst : entity work.sseg_d --instanciando decoder 7 segmentos
         port map(
             input  => input_tb,
             output => output_tb
         );
-           -- instanciando o somador adder em uma instancia adder_inst
-        port map(
-                                            --fazendo portmap, conectando as portas da entidade interna aos sinais
-            input   => input_tb,            -- conectando entrada do shifter
-            shift_cntrl => shift_ctl_tb ,   -- conectando controle do shifter
-            shift_out => output_tb          -- conectando saída do shifter
-        );
-
- -- gera os valores de entrada
-input_tb <=  to_unsigned(15,input_tb'length);
 
 
- --gera os valores de controle
+
  process
  begin
-     shift_ctl_tb <= "00";
+     input_tb <= "0000";
      wait for 5 ns;
-     shift_ctl_tb <= "01";
+     input_tb <= "0001";
      wait for 5 ns;
-     shift_ctl_tb <= "10";
+     input_tb <= "0010";
      wait for 5 ns;
-     shift_ctl_tb <= "11";
+     input_tb <= "0011";
+     wait for 5 ns;
+     input_tb <= "0100";
+     wait for 5 ns;
+     input_tb <= "0101";
+     wait for 5 ns;
+     input_tb <= "0110";
+     wait for 5 ns;
+     input_tb <= "0111";
+     wait for 5 ns;
+     input_tb <= "1000";
+     wait for 5 ns;
+     input_tb <= "1001";
+     wait for 5 ns;
+     input_tb <= "1010";
+     wait for 5 ns;
+     input_tb <= "1011";
+     wait for 5 ns;
+     input_tb <= "1100";
+     wait for 5 ns;
+     input_tb <= "1101";
+     wait for 5 ns;
+     input_tb <= "1110";
+     wait for 5 ns;
+     input_tb <= "1111";
      wait for 5 ns;
  end process;
  
