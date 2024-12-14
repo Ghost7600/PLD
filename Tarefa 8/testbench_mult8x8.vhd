@@ -1,7 +1,5 @@
 -------------------------------------------------------------------
 -- Name        : mul_8x8.vhd
--- Author      : Paulo Cezar
--- Version     : 1.0.0
 -- Description : testbench for Multiplicador 8x8
 -------------------------------------------------------------------
 
@@ -12,38 +10,42 @@ use ieee.numeric_std.all;
 entity testbench_mult8x8 is
 end entity testbench_mult8x8;
 ------------------------------
-
-architecture mul_8x8 of testbench_mult8x8 is
+-- conexões externas
+architecture rtl of testbench_mult8x8 is
     signal data_a : unsigned (7 downto 0);
     signal data_b : unsigned (7 downto 0);
     signal start : std_logic;
     signal reset_a : std_logic;
     signal clk : std_logic;
     signal done_flag : std_logic;
-    signal seg7 : unsigned (7 downto 0);
+    signal s_sseg_unsigned : unsigned (7 downto 0);
     signal out_8x8 : unsigned (15 downto 0) := (others => '0');
 
 
     
 begin
-    mult8x8: entity work.mul_8x8
+    mul8x8_inst : entity work.mul8x8
+        generic map(
+            datasize => 8
+        )
         port map(
-            clk            => clk,
-            start          => start,
-            reset_a        => reset_a,
-            data_a         => data_a,
-            data_b         => data_b,
-            done_flag      => done_flag,
-            seg7           => seg7,
-            out_8x8        => out_8x8
+            dataa        => data_a,
+            datab        => data_b,
+            start        => start,
+            reset_a      => reset_a,
+            clk          => clk,
+            product8x8_out   => out_8x8,
+            done_flag    => done_flag,
+            sseg_vec_out => s_sseg_unsigned
         );
+    
         
     process
     begin
         clk <= '0';
-        wait for 1 ns;
+        wait for 2 ns;
         clk <= '1';
-        wait for 1 ns;
+        wait for 2 ns;
     end process;
     -- clock process
 
@@ -58,26 +60,26 @@ begin
 
     process
     begin
-        data_a <= x"02";
-        data_b <= x"05";
+        data_a <= x"FA";
+        data_b <= x"FA";
         start <= '0';
-        wait for 15 ns;
+        wait for 16 ns;
         start <= '1';
-        wait for 5 ns;
+        wait for 4 ns;
         start <= '0';
         wait for 5 ns;
         -- start <= '1';
         -- wait for 10 ns;
         
-        data_a <= x"FA";
-        data_b <= x"FA";
+        --data_a <= x"FA";
+        --data_b <= x"FA";
         start <= '0';
         wait for 5 ns;
-        start <= '1';
-        wait for 5 ns;
+        --start <= '1';
+        wait for 4 ns;
         start <= '0';
         wait;
         
     end process;
     
-end architecture mul_8x8;
+end architecture rtl;

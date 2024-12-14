@@ -7,7 +7,7 @@ entity mult_control is
         clk : in std_logic;
         reset_a : in std_logic;
         start : in std_logic;
-        count : in std_logic_vector(1 downto 0);
+        count : in unsigned(1 downto 0);
 
         input_sel : out std_logic_vector(1 downto 0); -- controle do mux, portanto std_logic_vector
         shift_sel : out std_logic_vector(1 downto 0);
@@ -115,8 +115,8 @@ begin
         when MSB => 
             if start = '0' and count = "11" then
                 input_sel <= "11";
-                shift_sel <= "00";
-                done <= 0;
+                shift_sel <= "10";
+                done <= '0';
                 clk_ena <= '1';
                 sclr_n <= '1';
             else 
